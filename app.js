@@ -1,36 +1,53 @@
 "use strict";
-var Contact = /** @class */ (function () {
-    function Contact(firstName, phoneNumber) {
-        this.firstName = firstName;
-        this.phoneNumber = phoneNumber;
-    }
-    return Contact;
-}());
-var PhoneBook = /** @class */ (function () {
-    function PhoneBook(contacts) {
-        if (contacts === void 0) { contacts = []; }
-        this.contacts = contacts;
-    }
-    PhoneBook.prototype.addContact = function (firstName, lastName, phoneNumber) {
-        var contact = new Contact(firstName, phoneNumber);
-        this.contacts.push(contact);
-    };
-    PhoneBook.prototype.displayContacts = function () {
-        console.log(this.contacts);
-    };
-    return PhoneBook;
-}());
-var myPhoneBook = new PhoneBook();
+Object.defineProperty(exports, "__esModule", { value: true });
+var $ = require("jquery");
+var phonebook_1 = require("./app/phonebook");
+//Seeding phonebook with some data
+var myPhoneBook = new phonebook_1.PhoneBook();
 myPhoneBook.addContact('Frank', 'Atukunda', 776675635);
 myPhoneBook.addContact('John', 'Bukasa', 675645654);
 myPhoneBook.displayContacts();
-var saveContact = function () {
-    //  const firstName = $('#firstName').val.toString();
-    //  const lastName = $('#lastName').val.toString();
-    //  const phoneNumber = $('#mobile').val.toString();
-    var firstName = 'Sam';
-    var lastName = 'White';
-    var phoneNumber = '45673827';
+var appendTable = function () {
+    contacts.append(table);
+};
+var removeTable = function () {
+    contacts.empty();
+};
+//Append a new table row with a contact
+var appendTr = function () {
+    myPhoneBook.contacts.map(function (contact) {
+        var tr = $('<tr></tr>');
+        var firstName = $("<td>" + contact.firstName + "</td>");
+        var lastName = $("<td>" + contact.lastName + "</td>");
+        var phoneNumber = $("<td>" + contact.phoneNumber + "</td>");
+        table.append(tr);
+        tr.append(firstName);
+        tr.append(lastName);
+        tr.append(phoneNumber);
+    });
+};
+//Create a default table
+var contacts = $('.contacts');
+var table = $('<table></table>');
+table.addClass('table');
+appendTable();
+appendTr();
+//Adding a new contact
+$('#save').click(function (event) {
+    event.preventDefault();
+    var firstName = $('#firstName').val();
+    var lastName = $('#lastName').val();
+    var phoneNumber = $('#mobile').val();
     myPhoneBook.addContact(firstName, lastName, parseInt(phoneNumber));
+    removeTable();
+    appendTable();
+    appendTr();
     myPhoneBook.displayContacts();
+    clear();
+});
+//clear data from form fields
+var clear = function () {
+    $('#firstName').val('');
+    $('#lastName').val('');
+    $('#mobile').val('');
 };

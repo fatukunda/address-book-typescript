@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="app.js"></script>
 </head>
 <body>
     <div class="container">
@@ -39,7 +38,7 @@
                                 </div>
                                 <div class="form-group">
                                   <div class="col-sm-offset-2 col-sm-20">
-                                    <button type="submit" class="btn btn-default btn-block" onclick="saveContact()">Save</button>
+                                    <button type="submit" class="btn btn-default btn-block" id="save">Save</button>
                                   </div>
                                 </div>
                               </form>
@@ -52,5 +51,6 @@
                
         </div>
     </div>
+    <script src="./dist/bundle.js"></script>
 </body>
 </html>

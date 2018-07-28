@@ -1,3 +1,4 @@
+import $ = require('jquery');
 interface contact {
     firstName: string,
     lastName?: string,
@@ -6,15 +7,15 @@ interface contact {
 }
 
 class Contact implements contact {
-    constructor(public firstName: string, public phoneNumber: number) {
+    constructor(public firstName: string,public lastName: string, public phoneNumber: number) {
     }
 }
 
 class PhoneBook {
    constructor(public contacts: Contact[] = []){
    }
-   addContact(firstName: string, phoneNumber: number){
-       const contact = new Contact(firstName, phoneNumber)
+   addContact(firstName: string, lastName: string, phoneNumber: number){
+       const contact = new Contact(firstName, lastName, phoneNumber)
        this.contacts.push(contact);
    }
    displayContacts(){
@@ -22,11 +23,24 @@ class PhoneBook {
    }
 }
  const myPhoneBook = new PhoneBook()
- myPhoneBook.addContact('Frank', 776675635);
- myPhoneBook.addContact('John', 675645654);
+ myPhoneBook.addContact('Frank', 'Atukunda', 776675635);
+ myPhoneBook.addContact('John', 'Bukasa', 675645654);
  myPhoneBook.displayContacts();
 
- const saveContact = () => {
-     
+    $('#save').click((event) => {
+        event.preventDefault();
+        const firstName = $('#firstName').val()
+        const lastName = $('#lastName').val();
+        const phoneNumber = $('#mobile').val();
+        myPhoneBook.addContact(<string>firstName, <string>lastName, parseInt(phoneNumber));
+        myPhoneBook.displayContacts();
+        clear();
+
+ });
+ const clear = () =>  {
+    $('#firstName').val('');
+    $('#lastName').val('');
+    $('#mobile').val('');
  }
+
  

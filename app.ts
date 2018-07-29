@@ -7,6 +7,7 @@ window.addEventListener('load', (event) => {
     event.preventDefault();
     tabeleDefinition();
     seedTableData();
+    removeContact();
 })
 
 //Create a table
@@ -21,9 +22,9 @@ const seedTableData = () => {
        const tr = $('<tr></tr>');
        const fName = $(`<td>${contact.firstName}</td>`);
        const lName = $(`<td>${contact.lastName}</td>`);
-       const mobile = $(`<td>${contact.phoneNumber}</td>`);
-       const edit = $("<td><button class = 'btn btn-primary btn-sm'> Edit </button></td>");
-       const remove = $("<td><button class = 'btn btn-danger btn-sm'> Remove </button></td>");
+       const mobile = $(`<td id ='tel'>${contact.phoneNumber}</td>`);
+       const edit = $("<td><button class = 'btn btn-primary btn-sm edit'> Edit </button></td>");
+       const remove = $("<td><button class = 'btn btn-danger btn-sm remove'> Remove </button></td>");
        table.append(tr);
        tr.append(fName);
        tr.append(lName);
@@ -39,9 +40,10 @@ const seedTableData = () => {
         const firstName = $('#firstName').val()
         const lastName = $('#lastName').val();
         const phoneNumber = $('#mobile').val();
-        myPhoneBook.addContact(<string>firstName, <string>lastName, +phoneNumber);
+        myPhoneBook.addContact(<string>firstName, <string>lastName, phoneNumber);
         table.children().remove();
         seedTableData();
+        removeContact();
         clear();
 
  });
@@ -52,7 +54,13 @@ const seedTableData = () => {
     $('#mobile').val('');
  }
   
- 
+ const removeContact = () =>{
+     const contactList = $('.remove').toArray();
+     contactList.map((contactbtn) => {
+         contactbtn.addEventListener('click', (event) => {
+             event.preventDefault();
+             contactbtn.closest('tr').remove();
+         })
+     })
 
-
- 
+ }

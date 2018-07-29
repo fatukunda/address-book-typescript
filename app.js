@@ -2,20 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = require("jquery");
 var seed_1 = require("./app/seed");
-//Append a new table row with a contact
-var appendTr = function () {
-    seed_1.myPhoneBook.contacts.map(function (contact, index, contacts) {
-        if (contacts.slice(-1)[0]) {
-            var tr = $('<tr></tr>');
-            var firstName = $("<td>" + contact.firstName + "</td>");
-            var lastName = $("<td>" + contact.lastName + "</td>");
-            var phoneNumber = $("<td>" + contact.phoneNumber + "</td>");
-            table.append(tr);
-            tr.append(firstName);
-            tr.append(lastName);
-            tr.append(phoneNumber);
-        }
-    });
+var table = $('<table></table>');
+//Initial loads
+window.addEventListener('load', function (event) {
+    event.preventDefault();
+    tabeleDefinition();
+    seedTableData();
+    removeContact();
+});
+//Create a table
+var tabeleDefinition = function () {
+    var contacts = $('.contacts');
+    table.addClass('table');
+    contacts.append(table);
 };
 var seedTableData = function () {
     seed_1.myPhoneBook.contacts.map(function (contact) {
@@ -23,24 +22,15 @@ var seedTableData = function () {
         var fName = $("<td>" + contact.firstName + "</td>");
         var lName = $("<td>" + contact.lastName + "</td>");
         var mobile = $("<td>" + contact.phoneNumber + "</td>");
+        var edit = $("<td><button class = 'btn btn-primary btn-sm edit'> Edit </button></td>");
+        var remove = $("<td><button class = 'btn btn-danger btn-sm remove'> Remove </button></td>");
         table.append(tr);
         tr.append(fName);
         tr.append(lName);
         tr.append(mobile);
+        tr.append(edit);
+        tr.append(remove);
     });
-};
-//Create a default table
-var contacts = $('.contacts');
-var table = $('<table></table>');
-table.addClass('table');
-contacts.append(table);
-seedTableData();
-//appendTr();
-var appendTable = function () {
-    contacts.append(table);
-};
-var removeTable = function () {
-    table.remove();
 };
 //Adding a new contact
 $('#save').click(function (event) {
@@ -48,9 +38,9 @@ $('#save').click(function (event) {
     var firstName = $('#firstName').val();
     var lastName = $('#lastName').val();
     var phoneNumber = $('#mobile').val();
-    seed_1.myPhoneBook.addContact(firstName, lastName, parseInt(phoneNumber));
-    appendTr();
-    seed_1.myPhoneBook.displayContacts();
+    seed_1.myPhoneBook.addContact(firstName, lastName, phoneNumber);
+    table.children().remove();
+    seedTableData();
     clear();
 });
 //clear data from form fields
@@ -58,4 +48,14 @@ var clear = function () {
     $('#firstName').val('');
     $('#lastName').val('');
     $('#mobile').val('');
+};
+var removeContact = function () {
+    var contactList = $('.remove').toArray();
+    console.log(contactList);
+    contactList.map(function (contactbtn) {
+        contactbtn.addEventListener('click', function (event) {
+            event.preventDefault();
+            $('this').closest('tr').remove();
+        });
+    });
 };

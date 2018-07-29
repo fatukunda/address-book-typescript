@@ -10,4 +10,12 @@ export class PhoneBook {
     displayContacts(){
         console.log(this.contacts);
     }
+    removeContact(phoneNumber: number){
+      this.contacts = this.contacts.filter((contact) => contact.phoneNumber !== phoneNumber)
+    }
+
+ }
+
+ const deleteContact = () =>{
+     
  }

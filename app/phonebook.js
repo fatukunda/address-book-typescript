@@ -14,6 +14,11 @@ var PhoneBook = /** @class */ (function () {
     PhoneBook.prototype.displayContacts = function () {
         console.log(this.contacts);
     };
+    PhoneBook.prototype.removeContact = function (phoneNumber) {
+        this.contacts = this.contacts.filter(function (contact) { return contact.phoneNumber !== phoneNumber; });
+    };
     return PhoneBook;
 }());
 exports.PhoneBook = PhoneBook;
+var deleteContact = function () {
+};

@@ -1,52 +1,47 @@
 import $ = require('jquery');
-import { PhoneBook } from './app/phonebook';
-//Seeding phonebook with some data
- const myPhoneBook = new PhoneBook()
- myPhoneBook.addContact('Frank', 'Atukunda', 776675635);
- myPhoneBook.addContact('John', 'Bukasa', 675645654);
- myPhoneBook.displayContacts();
+import { myPhoneBook}  from './app/seed';
 
- 
- const appendTable = () => {
+const table = $('<table></table>');
+//Initial loads
+window.addEventListener('load', (event) => {
+    event.preventDefault();
+    tabeleDefinition();
+    seedTableData();
+})
+
+//Create a table
+const tabeleDefinition = () => {
+    const contacts = $('.contacts');
+    table.addClass('table');
     contacts.append(table);
- }
-const removeTable = () => {
-    contacts.empty();
 }
-
- //Append a new table row with a contact
- const appendTr = () => {
+ 
+const seedTableData = () => { 
     myPhoneBook.contacts.map((contact) => {
-        const tr = $('<tr></tr>');
-        const firstName = $(`<td>${contact.firstName}</td>`);
-        const lastName = $(`<td>${contact.lastName}</td>`);
-        const phoneNumber = $(`<td>${contact.phoneNumber}</td>`);
-        table.append(tr);
-        tr.append(firstName);
-        tr.append(lastName);
-        tr.append(phoneNumber);
+       const tr = $('<tr></tr>');
+       const fName = $(`<td>${contact.firstName}</td>`);
+       const lName = $(`<td>${contact.lastName}</td>`);
+       const mobile = $(`<td>${contact.phoneNumber}</td>`);
+       const edit = $("<td><button class = 'btn btn-primary btn-sm'> Edit </button></td>");
+       const remove = $("<td><button class = 'btn btn-danger btn-sm'> Remove </button></td>");
+       table.append(tr);
+       tr.append(fName);
+       tr.append(lName);
+       tr.append(mobile);
+       tr.append(edit);
+       tr.append(remove);
     });
- };
-
- //Create a default table
- const contacts = $('.contacts');
- const table = $('<table></table>');
- table.addClass('table');
- appendTable();
- appendTr();
-
-
+ 
+}
 //Adding a new contact
     $('#save').click((event) => {
         event.preventDefault();
         const firstName = $('#firstName').val()
         const lastName = $('#lastName').val();
         const phoneNumber = $('#mobile').val();
-        myPhoneBook.addContact(<string>firstName, <string>lastName, parseInt(phoneNumber));
-        removeTable();
-        appendTable();
-        appendTr();
-        myPhoneBook.displayContacts();
+        myPhoneBook.addContact(<string>firstName, <string>lastName, +phoneNumber);
+        table.children().remove();
+        seedTableData();
         clear();
 
  });
@@ -56,6 +51,7 @@ const removeTable = () => {
     $('#lastName').val('');
     $('#mobile').val('');
  }
+  
  
 
 

@@ -1,48 +1,56 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var $ = require("jquery");
-var phonebook_1 = require("./app/phonebook");
-//Seeding phonebook with some data
-var myPhoneBook = new phonebook_1.PhoneBook();
-myPhoneBook.addContact('Frank', 'Atukunda', 776675635);
-myPhoneBook.addContact('John', 'Bukasa', 675645654);
-myPhoneBook.displayContacts();
-var appendTable = function () {
-    contacts.append(table);
-};
-var removeTable = function () {
-    contacts.empty();
-};
+var seed_1 = require("./app/seed");
 //Append a new table row with a contact
 var appendTr = function () {
-    myPhoneBook.contacts.map(function (contact) {
+    seed_1.myPhoneBook.contacts.map(function (contact, index, contacts) {
+        if (contacts.slice(-1)[0]) {
+            var tr = $('<tr></tr>');
+            var firstName = $("<td>" + contact.firstName + "</td>");
+            var lastName = $("<td>" + contact.lastName + "</td>");
+            var phoneNumber = $("<td>" + contact.phoneNumber + "</td>");
+            table.append(tr);
+            tr.append(firstName);
+            tr.append(lastName);
+            tr.append(phoneNumber);
+        }
+    });
+};
+var seedTableData = function () {
+    seed_1.myPhoneBook.contacts.map(function (contact) {
         var tr = $('<tr></tr>');
-        var firstName = $("<td>" + contact.firstName + "</td>");
-        var lastName = $("<td>" + contact.lastName + "</td>");
-        var phoneNumber = $("<td>" + contact.phoneNumber + "</td>");
+        var fName = $("<td>" + contact.firstName + "</td>");
+        var lName = $("<td>" + contact.lastName + "</td>");
+        var mobile = $("<td>" + contact.phoneNumber + "</td>");
         table.append(tr);
-        tr.append(firstName);
-        tr.append(lastName);
-        tr.append(phoneNumber);
+        tr.append(fName);
+        tr.append(lName);
+        tr.append(mobile);
     });
 };
 //Create a default table
 var contacts = $('.contacts');
 var table = $('<table></table>');
 table.addClass('table');
-appendTable();
-appendTr();
+contacts.append(table);
+seedTableData();
+//appendTr();
+var appendTable = function () {
+    contacts.append(table);
+};
+var removeTable = function () {
+    table.remove();
+};
 //Adding a new contact
 $('#save').click(function (event) {
     event.preventDefault();
     var firstName = $('#firstName').val();
     var lastName = $('#lastName').val();
     var phoneNumber = $('#mobile').val();
-    myPhoneBook.addContact(firstName, lastName, parseInt(phoneNumber));
-    removeTable();
-    appendTable();
+    seed_1.myPhoneBook.addContact(firstName, lastName, parseInt(phoneNumber));
     appendTr();
-    myPhoneBook.displayContacts();
+    seed_1.myPhoneBook.displayContacts();
     clear();
 });
 //clear data from form fields

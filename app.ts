@@ -1,13 +1,13 @@
+import { PhoneBook } from './app/phonebook';
 import $ = require('jquery');
 import { myPhoneBook}  from './app/seed';
 
 const table = $('<table></table>');
-//Initial loads
+//Initial page load
 window.addEventListener('load', (event) => {
     event.preventDefault();
     tabeleDefinition();
     seedTableData();
-    removeContact();
 })
 
 //Create a table
@@ -22,7 +22,7 @@ const seedTableData = () => {
        const tr = $('<tr></tr>');
        const fName = $(`<td>${contact.firstName}</td>`);
        const lName = $(`<td>${contact.lastName}</td>`);
-       const mobile = $(`<td id ='tel'>${contact.phoneNumber}</td>`);
+       const mobile = $(`<td class = 'tel'>${contact.phoneNumber}</td>`);
        const edit = $("<td><button class = 'btn btn-primary btn-sm edit'> Edit </button></td>");
        const remove = $("<td><button class = 'btn btn-danger btn-sm remove'> Remove </button></td>");
        table.append(tr);
@@ -31,19 +31,22 @@ const seedTableData = () => {
        tr.append(mobile);
        tr.append(edit);
        tr.append(remove);
+       remove.click((event) => {
+           $(remove).closest('tr').remove();
+           myPhoneBook.removeContact(contact.phoneNumber);
+           myPhoneBook.displayContacts();
+       })
     });
- 
 }
 //Adding a new contact
     $('#save').click((event) => {
         event.preventDefault();
         const firstName = $('#firstName').val()
         const lastName = $('#lastName').val();
-        const phoneNumber = $('#mobile').val();
+        const phoneNumber = <number>($('#mobile').val());
         myPhoneBook.addContact(<string>firstName, <string>lastName, phoneNumber);
         table.children().remove();
         seedTableData();
-        removeContact();
         clear();
 
  });
@@ -52,15 +55,4 @@ const seedTableData = () => {
     $('#firstName').val('');
     $('#lastName').val('');
     $('#mobile').val('');
- }
-  
- const removeContact = () =>{
-     const contactList = $('.remove').toArray();
-     contactList.map((contactbtn) => {
-         contactbtn.addEventListener('click', (event) => {
-             event.preventDefault();
-             contactbtn.closest('tr').remove();
-         })
-     })
-
- }
+ };

@@ -11,11 +11,12 @@ export class PhoneBook {
         console.log(this.contacts);
     }
     removeContact(phoneNumber: number){
-      this.contacts = this.contacts.filter((contact) => contact.phoneNumber !== phoneNumber)
+        this.contacts.forEach((contact, index) => {
+            if (contact.phoneNumber === phoneNumber) {
+                this.contacts.splice(index, 1);
+            }
+        })
     }
 
  }
-
- const deleteContact = () =>{
-     
- }
+ 

@@ -20,15 +20,15 @@ const seedTableData = () => {
     myPhoneBook.contacts.map((contact, index) => {
        const tr = $('<tr></tr>');
        const fName =  $(`<td>
-       <input type = 'text' value = ${contact.firstName} class='form-control' readonly>
+       <input type = 'text' value = ${contact.firstName} class='form-control editable' readonly>
       </td>
       `);
        const lName = $(`<td>
-       <input type = 'text' value = ${contact.lastName} class='form-control' readonly>
+       <input type = 'text' value = ${contact.lastName} class='form-control editable' readonly>
       </td>
       `);
        const mobile = $(`<td>
-       <input type = 'number' value = ${contact.phoneNumber} class='form-control' readonly>
+       <input type = 'number' value = ${contact.phoneNumber} class='form-control editable' readonly>
       </td>
       `);
        let edit = $("<td><button class = 'btn btn-primary btn-sm edit'> Edit </button></td>");
@@ -39,6 +39,7 @@ const seedTableData = () => {
        tr.append(mobile);
        tr.append(edit);
        tr.append(remove);
+       const editableFields = $('.editable');
        remove.click(() => {
            $(remove).closest('tr').remove();
            myPhoneBook.removeContact(contact.phoneNumber);
@@ -73,11 +74,12 @@ const seedTableData = () => {
         const firstName = $('#firstName').val()
         const lastName = $('#lastName').val();
         const phoneNumber = <number>($('#mobile').val());
-        myPhoneBook.addContact(<string>firstName, <string>lastName, phoneNumber);
-        table.children().remove();
-        seedTableData();
-        clear();
-
+        if (firstName !== '' && lastName !== '' && phoneNumber!=0) {
+            myPhoneBook.addContact(<string>firstName, <string>lastName, phoneNumber);
+            table.children().remove();
+            seedTableData();
+            clear();
+        }
  });
  //clear data from form fields
  const clear = () =>  {

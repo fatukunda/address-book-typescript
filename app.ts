@@ -16,14 +16,22 @@ const tabeleDefinition = () => {
     table.addClass('table');
     contacts.append(table);
 }
- 
 const seedTableData = () => { 
-    myPhoneBook.contacts.map((contact) => {
+    myPhoneBook.contacts.map((contact, index) => {
        const tr = $('<tr></tr>');
-       const fName = $(`<td>${contact.firstName}</td>`);
-       const lName = $(`<td>${contact.lastName}</td>`);
-       const mobile = $(`<td class = 'tel'>${contact.phoneNumber}</td>`);
-       const edit = $("<td><button class = 'btn btn-primary btn-sm edit'> Edit </button></td>");
+       const fName =  $(`<td>
+       <input type = 'text' value = ${contact.firstName} class='form-control' readonly>
+      </td>
+      `);
+       const lName = $(`<td>
+       <input type = 'text' value = ${contact.lastName} class='form-control' readonly>
+      </td>
+      `);
+       const mobile = $(`<td>
+       <input type = 'number' value = ${contact.phoneNumber} class='form-control' readonly>
+      </td>
+      `);
+       let edit = $("<td><button class = 'btn btn-primary btn-sm edit'> Edit </button></td>");
        const remove = $("<td><button class = 'btn btn-danger btn-sm remove'> Remove </button></td>");
        table.append(tr);
        tr.append(fName);
@@ -31,10 +39,31 @@ const seedTableData = () => {
        tr.append(mobile);
        tr.append(edit);
        tr.append(remove);
-       remove.click((event) => {
+       remove.click(() => {
            $(remove).closest('tr').remove();
            myPhoneBook.removeContact(contact.phoneNumber);
            myPhoneBook.displayContacts();
+       });
+       edit.click((event) => {
+           event.preventDefault();
+          const attr =  $(fName).children().attr('readonly');
+          if(attr){
+            $(fName).children().removeAttr(<string>attr);
+            $(edit).children().html('Save');
+            $(edit).children().removeClass('btn-primary');
+            $(edit).children().addClass('btn-success');
+            //myPhoneBook.editContact(index);
+          } else {
+            $(fName).children().attr('readonly', '');
+            $(edit).children().html('Edit');
+            $(edit).children().removeClass('btn-success');
+            $(edit).children().addClass('btn-primary');
+          }
+         
+          
+          
+          attr ? $(lName).children().removeAttr(<string>attr): $(lName).children().attr('readonly', '');
+          attr ? $(mobile).children().removeAttr(<string>attr): $(mobile).children().attr('readonly', '');
        })
     });
 }

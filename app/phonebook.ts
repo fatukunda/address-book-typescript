@@ -17,6 +17,10 @@ export class PhoneBook {
             }
         })
     }
+    editContact(id: number) {
+        this.contacts.map((cont, index) => {
+            
+        })
+    }
 
  }
- 

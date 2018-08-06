@@ -17,10 +17,14 @@ export class PhoneBook {
             }
         })
     }
-    editContact(id: number) {
-        this.contacts.map((cont, index) => {
-            
-        })
-    }
+    editContact(key: number, firstName: string, lastName: string, phoneNumber: number) {
+        this.contacts.map((contact, index) => {
+            if (index === key) {
+                contact.firstName = firstName;
+                contact.lastName = lastName;
+                contact.phoneNumber = phoneNumber;
+            }
+        });
+    };
 
- }
+ };

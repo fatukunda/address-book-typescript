@@ -47,24 +47,24 @@ const seedTableData = () => {
        });
        edit.click((event) => {
            event.preventDefault();
-          const attr =  $(fName).children().attr('readonly');
-          if(attr){
-            $(fName).children().removeAttr(<string>attr);
-            $(edit).children().html('Save');
-            $(edit).children().removeClass('btn-primary');
-            $(edit).children().addClass('btn-success');
-            //myPhoneBook.editContact(index);
-          } else {
-            $(fName).children().attr('readonly', '');
-            $(edit).children().html('Edit');
-            $(edit).children().removeClass('btn-success');
-            $(edit).children().addClass('btn-primary');
-          }
-         
+           //Put all the <td> elements in an array
+           let tableDataElements = [$(fName), $(lName), $(mobile)];
+           tableDataElements.map((td) => {
+               let attr = td.children().attr('readonly');
+               if (attr) {
+                   td.children().removeAttr(attr);
+                   $(edit).children().html('Save');
+                   $(edit).children().removeClass('btn-primary');
+                   $(edit).children().addClass('btn-success');
+               }else{
+                   td.children().attr('readonly', '');
+                   $(edit).children().html('Edit');
+                   $(edit).children().removeClass('btn-success');
+                   $(edit).children().addClass('btn-primary');
+               }
+                 
+           })
           
-          
-          attr ? $(lName).children().removeAttr(<string>attr): $(lName).children().attr('readonly', '');
-          attr ? $(mobile).children().removeAttr(<string>attr): $(mobile).children().attr('readonly', '');
        })
     });
 }
@@ -87,3 +87,9 @@ const seedTableData = () => {
     $('#lastName').val('');
     $('#mobile').val('');
  };
+const contactDetails = {
+    firstName: $('#firstName').val(),
+    lastName: $('#lastName').val(),
+    mobile: $('#mobile').val()
+}
+  

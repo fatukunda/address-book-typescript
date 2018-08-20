@@ -10,21 +10,25 @@ export class PhoneBook {
     displayContacts(){
         console.log(this.contacts);
     }
+    displayContact(){
+        console.log('hello');
+    }
     removeContact(phoneNumber: number){
         this.contacts.forEach((contact, index) => {
+            contact
             if (contact.phoneNumber === phoneNumber) {
                 this.contacts.splice(index, 1);
             }
         })
-    }
-    editContact(key: number, firstName: string, lastName: string, phoneNumber: number) {
-        this.contacts.map((contact, index) => {
-            if (index === key) {
-                contact.firstName = firstName;
-                contact.lastName = lastName;
-                contact.phoneNumber = phoneNumber;
+    };
+    editContact(contact: Contact, id: number) {
+        this.contacts.map((contac, index) => {
+            if (index === id) {
+                contac.firstName = contact.firstName;
+                contac.lastName = contact.lastName;
+                contac.phoneNumber = contact.phoneNumber;
             }
-        });
+        })
     };
 
  };

@@ -4,3 +4,4 @@ import { PhoneBook } from './phonebook';
  myPhoneBook.addContact('Frank', 'Atukunda', 776675635);
  myPhoneBook.addContact('John', 'Bukasa', 675645654);
  myPhoneBook.displayContacts();
+ 
